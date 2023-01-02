@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('firstname', 25);
             $table->string('email', 100)->unique();
             $table->string('image', 191)->nullable();
-            $table->string('password', 20);
-            $table->char('phone', 10);
+            $table->string('password', 100);
+            $table->char('phone', 10)->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('role_id')->default(1);
