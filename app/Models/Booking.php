@@ -19,6 +19,10 @@ class Booking extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function event() {
+        return $this->belongsTo(Event::class);
+    }
+
     protected $with = ['user'];
 
 }

@@ -39,6 +39,7 @@
                                 <p>Horaires : {{ $company->opening_hours }}</p>
                             </div>
                             <div class="company-choices" style="margin-inline-start: auto;">
+                                <a href="{{ route('profile.add-booking') }}"><p><i class="fa-solid fa-plus" alt="Ajouter un match"></i></p></a>
                                 <a href="{{ route('company-detail', $company->id) }}"><p><i class="fa-solid fa-eye"></i></p></a>
                                 <a href="{{ route('profile.company-edit', $company->id) }}"><p><i class="fa-solid fa-pen-to-square"></i></p></a>
                             </div>

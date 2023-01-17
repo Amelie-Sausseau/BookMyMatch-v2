@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
+        Schema::create('company_events', function (Blueprint $table) {
             $table->timestamps();
-            $table->datetime('schedule_date');
-            $table->integer('scheduled_seats');
-
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->primary(['company_id', 'event_id']);
+            $table->integer('seats');
 
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
@@ -37,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('company_events');
     }
 };

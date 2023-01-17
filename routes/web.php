@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FileUploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company-detail');
     Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->name('profile.company-edit');
     Route::post('/company/edit/{id}', [CompanyController::class, 'update'])->name('company.update');
+
+    Route::get('/add-booking', [BookingController::class, 'create'])->name('profile.add-booking');
 
 
     Route::get('/dashboard', [CompanyController::class, 'getCompany'])->name('dashboard');

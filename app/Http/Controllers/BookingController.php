@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Company;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -23,7 +28,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        return view('profile.add-booking');
     }
 
     /**
