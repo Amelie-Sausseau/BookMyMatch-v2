@@ -6,7 +6,7 @@
 
     </header>
 
-    <form action="{{ route('profile.fileupload') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profile.fileupload') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('post')
 
@@ -29,7 +29,8 @@
                 @if (isset(Auth::user()->image))
                     <div>
                         <h3>Photo de profil actuelle :</h3>
-                        <img src="{{ asset('storage/uploads/' . Auth::user()->image) }}" alt="">
+                        <img src="{{ asset('storage/uploads/' . Auth::user()->image) }}"
+                        style="width:100px; height: 100px; border-radius: 100%;" alt="">
                     </div>
                 @endif
 

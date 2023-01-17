@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'image', 'opening_hours', 'avalaible_seats', 'address', 'city', 'postal_code', 'user_id'];
+    protected $fillable = ['name', 'image', 'opening_hours', 'available_seats', 'address', 'city', 'postal_code', 'user_id'];
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -24,4 +25,15 @@ class Company extends Model
     }
 
     protected $with = ['user'];
+
+    /**
+     * Get a company
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public static function getCompany($id) {
+        $company = Company::findOrFail($id);
+        return $company;
+    }
 }

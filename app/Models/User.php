@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Traits\HasUUID;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
     use HasFactory;
+    use HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -61,4 +64,5 @@ class User extends Authenticatable
             return true;
         }
     }
+
 }

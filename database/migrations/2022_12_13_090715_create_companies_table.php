@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name', 25);
             $table->string('image', 191)->nullable();
             $table->string('opening_hours', 191);
-            $table->integer('avalaible_seats');
+            $table->integer('available_seats');
             $table->string('address', 100);
             $table->string('city', 25);
             $table->char('postal_code', 5);
