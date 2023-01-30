@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 class User extends Authenticatable
 {
     use HasFactory;
-    use HasUUID;
 
     /**
      * The attributes that are mass assignable.

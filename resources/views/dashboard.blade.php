@@ -39,11 +39,23 @@
                                 <p>Horaires : {{ $company->opening_hours }}</p>
                             </div>
                             <div class="company-choices" style="margin-inline-start: auto;">
-                                <a href="{{ route('profile.add-booking') }}"><p><i class="fa-solid fa-plus" alt="Ajouter un match"></i></p></a>
-                                <a href="{{ route('company-detail', $company->id) }}"><p><i class="fa-solid fa-eye"></i></p></a>
-                                <a href="{{ route('profile.company-edit', $company->id) }}"><p><i class="fa-solid fa-pen-to-square"></i></p></a>
+                                <a href="{{ route('profile.add-booking', $company->id) }}">
+                                    <p><i class="fa-solid fa-plus" alt="Ajouter un match"></i></p>
+                                </a>
+                                <a href="{{ route('company-detail', $company->id) }}">
+                                    <p><i class="fa-solid fa-eye"></i></p>
+                                </a>
+                                <a href="{{ route('profile.company-edit', $company->id) }}">
+                                    <p><i class="fa-solid fa-pen-to-square"></i></p>
+                                </a>
                             </div>
                         </div>
+                        @if (App\Models\Company::getCompanyEvent($company->id))
+                        <div class="infos-resa" style="margin: 1.5rem">
+                            <h3>Prochains évènements</h3>
+                            @foreach (App\Models\Company::getCompanyEvent($company->id) as $event) - {{ date('d/m/Y à H:m', strtotime($event->date)) }} <i class="fa-solid fa-pen-to-square"></i><a href="{{ route('delete-event', $event->company_id, $event->event_id) }}"><i class="fa-solid fa-trash"></i></a></p><br></p>@endforeach
+                        </div>
+                        @endif
                     </div>
                 @endforeach
             @endif

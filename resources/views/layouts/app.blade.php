@@ -18,6 +18,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
+<style>
+            .bmm-btn {
+            background-color: #FECD08;
+            align-self: center;
+            padding: 16px 32px;
+            border: 1px solid #FECD08;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 5px;
+            color: black;
+        }
+</style>
+
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')

@@ -15,8 +15,9 @@ class Event extends Model
     }
 
     public function companies() {
-        return $this->belongsToMany(Company::class, 'company_events')->withPivot('seats');
+        return $this->belongsToMany(Company::class, 'company_events')->withPivot('seats', 'date');
     }
 
-    protected $with = ['user'];
+
+
 }

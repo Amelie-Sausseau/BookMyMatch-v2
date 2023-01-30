@@ -11,28 +11,34 @@
                 <div class="max-w-xl">
                     <section>
 
-                        <form method="post" action="{{ route('company') }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route('profile.add-booking-store', $company->id) }}" class="mt-6 space-y-6">
                             @csrf
                             @method('post')
                             <div>
-                                <x-input-label for="title" :value="__('Titre')" />
-                                <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" required autofocus
-                                    autocomplete="title" />
-                                <x-input-error class="mt-2" :messages="$errors->get('schedule_date')" />
+                                <x-input-label for="events" :value="__('Choisir un match')" />
+                                <select id="events" name="events" class="mt-1 block w-full" required autofocus
+                                autocomplete="events">
+                                    @foreach ($events as $data)
+                                    <option value="{{$data->id}}">
+                                        {{$data->title}} le {{ date('d/m/Y à H:m', strtotime($data->date)) }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('events')" />
                             </div>
 
                             <div>
                                 <x-input-label for="schedule_date" :value="__('Date du match')" />
                                 <x-text-input id="schedule_date" name="schedule_date" type="datetime-local" class="mt-1 block w-full" required autofocus
-                                    autocomplete="schedule_date" />
+                                    autocomplete="schedule_date"/>
                                 <x-input-error class="mt-2" :messages="$errors->get('schedule_date')" />
                             </div>
 
                             <div>
-                                <x-input-label for="scheduled_seats" :value="__('Nombre de places disponibles')" />
-                                <x-text-input id="scheduled_seats" name="scheduled_seats" type="number" class="mt-1 block w-full" required autofocus
-                                    autocomplete="scheduled_seats"/>
-                                <x-input-error class="mt-2" :messages="$errors->get('scheduled_seats')" />
+                                <x-input-label for="seats" :value="__('Nombre de places disponibles')" />
+                                <x-text-input id="seats" name="seats" type="number" class="mt-1 block w-full" required autofocus
+                                    autocomplete="seats" max="{{ $company->available_seats }}" value="{{ $company->available_seats }}"/>
+                                <x-input-error class="mt-2" :messages="$errors->get('seats')" />
                             </div>
 
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookingController;
+use App\Models\Event;
 
 class CompanyController extends Controller
 {
@@ -162,5 +163,56 @@ class CompanyController extends Controller
         $companies = DB::select('select * from companies where user_id = ?', [$id]);
 
         return view("dashboard", compact("companies"));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createEventCompany($id)
+    {
+        $events = Event::where('date', '>', now())->orderBy('date')->get();
+        $company = Company::getCompany($id);
+        return view('profile.add-booking', ['events' => $events, 'company' => $company]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeEventCompany(Request $request, $id)
+    {
+        $company = Company::getCompany($id);
+
+        $request->validate([
+            'events' => ['required'],
+            'schedule_date' => ['required'],
+            'seats' => ['required'],
+        ]);
+
+        $eventId = $request->input('events');
+        $seats = $request->input('seats');
+        $date = $request->input('schedule_date');
+        $company->events()->attach($eventId, ['seats' => $seats, 'date' => $date]);
+
+        return Redirect::route('dashboard');
+    }
+
+    /**
+     * Destroy resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Request
+     */
+    public function destroyEventCompany(Request $request)
+    {
+        $company = $request->input('company_id');
+        $eventId = $request->input('event_id');
+        $company->events()->detach($eventId);
+
+        return Redirect::route('dashboard');
     }
 }

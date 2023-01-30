@@ -307,16 +307,6 @@
             margin-bottom: 25px;
         }
 
-        .bmm-btn {
-            background-color: #FECD08;
-            align-self: center;
-            padding: 16px 32px;
-            border: 1px solid #FECD08;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 5px;
-            color: black;
-        }
-
         .home-reservations {
             background-color: black;
             color: white;

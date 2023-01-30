@@ -40,4 +40,16 @@ class Company extends Model
         $company = Company::findOrFail($id);
         return $company;
     }
+
+    /**
+     * Get companies events
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public static function getCompanyEvent($id)
+    {
+        $companyEvent = DB::select('select * from company_events where company_id = ?', [$id]);
+
+        return $companyEvent;
+    }
 }

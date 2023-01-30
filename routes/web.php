@@ -37,12 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company-detail');
     Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->name('profile.company-edit');
     Route::post('/company/edit/{id}', [CompanyController::class, 'update'])->name('company.update');
-
-    Route::get('/add-booking', [BookingController::class, 'create'])->name('profile.add-booking');
-
-
     Route::get('/dashboard', [CompanyController::class, 'getCompany'])->name('dashboard');
 
+    Route::get('/add-event/{id}', [CompanyController::class, 'createEventCompany'])->name('profile.add-booking');
+    Route::post('/add-event/{id}', [CompanyController::class, 'storeEventCompany'])->name('profile.add-booking-store');
+
+    Route::delete('/dashboard', [CompanyController::class, 'destroyEventCompany'])->name('delete-event');
 });
 
 require __DIR__.'/auth.php';
