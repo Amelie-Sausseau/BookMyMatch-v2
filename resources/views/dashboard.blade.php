@@ -51,10 +51,25 @@
                             </div>
                         </div>
                         @if (App\Models\Company::getCompanyEvent($company->id))
-                        <div class="infos-resa" style="margin: 1.5rem">
-                            <h3>Prochains évènements</h3>
-                            @foreach (App\Models\Company::getCompanyEvent($company->id) as $event) - {{ date('d/m/Y à H:m', strtotime($event->date)) }} <i class="fa-solid fa-pen-to-square"></i><a href="{{ route('delete-event', $event->company_id, $event->event_id) }}"><i class="fa-solid fa-trash"></i></a></p><br></p>@endforeach
-                        </div>
+                            <div class="infos-resa" style="margin: 1.5rem">
+                                <h3>Prochains évènements</h3>
+                                @foreach (App\Models\Company::getCompanyEvent($company->id) as $event)
+                                    - {{App\Models\Event::getEvent($event->event_id)->title}} : {{ date('d/m/Y à H:i', strtotime($event->date)) }}
+                                    <form method="get" action="{{ route('edit-booking') }}">@csrf
+                                        @method('get')<button type="submit"
+                                            class="fa-solid fa-pen-to-square"></button><input type="hidden"
+                                            value="{{ $event->company_id }}" name="company_id_edit"><input type="hidden"
+                                            value="{{ $event->event_id }}" name="event_id_edit">
+                                    </form>
+                                    <form method="post" action="{{ route('delete-event') }}">@csrf
+                                        @method('delete')<button type="submit"
+                                            class="fa-solid fa-trash"></button><input type="hidden"
+                                            value="{{ $event->company_id }}" name="company_id"><input type="hidden"
+                                            value="{{ $event->event_id }}" name="event_id">
+                                    </form>
+                                    </p><br></p>
+                                @endforeach
+                            </div>
                         @endif
                     </div>
                 @endforeach

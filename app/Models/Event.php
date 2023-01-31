@@ -18,6 +18,16 @@ class Event extends Model
         return $this->belongsToMany(Company::class, 'company_events')->withPivot('seats', 'date');
     }
 
+    /**
+     * Get an event
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public static function getEvent($id) {
+        $event = Event::findOrFail($id);
+        return $event;
+    }
 
 
 }

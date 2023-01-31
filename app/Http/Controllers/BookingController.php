@@ -19,7 +19,13 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $nextEvent = Event::where('date', '>', now())->orderBy('date')->first();
+        $companiesEvents = DB::table('company_events')->where('event_id', $nextEvent->id)->get();
+        //$companiesList = DB::select('select * from companies where id = ?', [$companiesEvents->company_id]);
+        foreach ($companiesEvents as $company) {
+            $companiesList = DB::select('select * from companies where id = ?', [$company->company_id]);
+        }
+        return view('companies-list', ['companiesList' => $companiesList, 'nextEvent' => $nextEvent]);
     }
 
     /**

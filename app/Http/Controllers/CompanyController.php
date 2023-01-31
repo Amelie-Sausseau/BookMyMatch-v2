@@ -209,9 +209,49 @@ class CompanyController extends Controller
      */
     public function destroyEventCompany(Request $request)
     {
-        $company = $request->input('company_id');
+        $companyId = $request->input('company_id');
+        $company = Company::getCompany($companyId);
         $eventId = $request->input('event_id');
         $company->events()->detach($eventId);
+
+        return Redirect::route('dashboard');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editEventCompany(Request $request)
+    {
+        $companyId = $request->input('company_id_edit');
+        $eventId = $request->input('event_id_edit');
+        $companyEvent = DB::table('company_events')->where('company_id', $companyId)->where('event_id', $eventId)->get();
+        return view('profile.edit-booking', ['companyEvent' => $companyEvent]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEventCompany(Request $request, $id)
+    {
+        $company = Company::getCompany($id);
+
+        $request->validate([
+            'event' => ['required'],
+            'schedule_date' => ['required'],
+            'seats' => ['required'],
+        ]);
+
+
+        $eventId = $request->input('event_id');
+        $seats = $request->input('seats');
+        $date = $request->input('schedule_date');
+        $company->events()->updateExistingPivot($eventId, ['seats' => $seats, 'date' => $date]);
 
         return Redirect::route('dashboard');
     }

@@ -52,4 +52,16 @@ class Company extends Model
 
         return $companyEvent;
     }
+
+    /**
+     * Get companies events
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public static function getCompanyEvents($id)
+    {
+        $companyEvent = DB::select('select * from company_events where company_id = ?', [$id], 'and event_id = ?', [$id2]);
+
+        return $companyEvent;
+    }
 }
