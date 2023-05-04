@@ -17,12 +17,22 @@
                         <h3>Horaires : {{ $company->opening_hours }}</h3>
                     </div>
                     <div class="infos-resa" style="margin: 1.5rem">
-                        @if (App\Models\Company::getCompanyEvent($company->id))<p>Date du prochain match : @foreach (App\Models\Company::getCompanyEvent($company->id) as $event)@if ($loop->first) {{$event->date}}@endif</p>@endforeach @endif
-                        @if (App\Models\Company::getCompanyEvent($company->id)) <p>Nombre de places restantes :  @foreach (App\Models\Company::getCompanyEvent($company->id) as $event)@if ($loop->first) {{ $event->seats}}@endif</p>@endforeach @endif
+                        @if ($company->events[0])
+                        @foreach ($company->events as $event)
+                        @if ($loop->first) {{session()->put('event', $event)}}
+                        <p>Date du prochain match :
+                            {{ date('d/m/Y à H:i', strtotime($event->date)) }}</p>
+                        <p>Nombre de places restantes : {{ $event->seats}} </p>
+                        @endif
+                        @endforeach
+                        @endif
                     </div>
-                    @if (Auth::user()->role_id == 1)
+                    @if (Auth::user()->role_id == 1) @php
+                        session()->put('company', $company);
+
+                    @endphp
                     <div style="display: flex; justify-content: center;">
-                        <a href="#" class="bmm-btn">Réserver</a>
+                        <a href="{{ route('booking.create') }}" class="bmm-btn">Réserver</a>
                     </div>
                     @endif
                 </div>

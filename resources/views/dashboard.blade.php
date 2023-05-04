@@ -54,12 +54,13 @@
                             <div class="infos-resa" style="margin: 1.5rem">
                                 <h3>Prochains évènements</h3>
                                 @foreach (App\Models\Company::getCompanyEvent($company->id) as $event)
-                                    - {{App\Models\Event::getEvent($event->event_id)->title}} : {{ date('d/m/Y à H:i', strtotime($event->date)) }}
+                                    - {{ App\Models\Event::getEvent($event->event_id)->title }} :
+                                    {{ date('d/m/Y à H:i', strtotime($event->date)) }}
                                     <form method="get" action="{{ route('edit-booking') }}">@csrf
                                         @method('get')<button type="submit"
                                             class="fa-solid fa-pen-to-square"></button><input type="hidden"
-                                            value="{{ $event->company_id }}" name="company_id_edit"><input type="hidden"
-                                            value="{{ $event->event_id }}" name="event_id_edit">
+                                            value="{{ $event->company_id }}" name="company_id_edit"><input
+                                            type="hidden" value="{{ $event->event_id }}" name="event_id_edit">
                                     </form>
                                     <form method="post" action="{{ route('delete-event') }}">@csrf
                                         @method('delete')<button type="submit"
@@ -71,6 +72,41 @@
                                 @endforeach
                             </div>
                         @endif
+                    </div>
+                @endforeach
+            @endif
+            @if (Auth::user()->role_id == 1 && count($bookings) > 0)
+                @if (count($bookings) > 1)
+                    <h1>Mes réservations</h1>
+                @else
+                    <h1>Ma réservation</h1>
+                @endif
+                @foreach ($bookings as $booking)
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900" style="display: flex; gap: 30px">
+                            <img src="{{ asset('storage/uploads/' . App\Models\Company::getCompany($booking->company_id)->image) }}"
+                                style="width:100px; height: 100px; border-radius: 100%;" alt="">
+                            <div style="flex-direction: column">
+                                <h3 style="font-weight: bold">
+                                    {{ App\Models\Company::getCompany($booking->company_id)->name }}</h3>
+                                <h4 style="font-weight: bold">Match
+                                    {{ App\Models\Event::getEvent($booking->event_id)->title }} </h4>
+                                <p>Le {{ date('d/m/Y à H:i', strtotime($booking->schedule_date)) }}</p>
+                                <p>Nombre de places réservées : {{ $booking->scheduled_seats }}</p>
+                            </div>
+                            @if ($booking->schedule_date > now())
+                                <div class="company-choices" style="margin-inline-start: auto;">
+                                    <form action="{{ route('booking.destroy', $booking->id) }}" method="delete">
+                                        <button>
+                                            <p><i class="fa-solid fa-trash"></i></p>
+                                        </button>
+                                    </form>
+                                    <a href="">
+                                        <p><i class="fa-solid fa-pen-to-square"></i></p>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 @endforeach
             @endif

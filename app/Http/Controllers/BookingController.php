@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\Event;
+use App\Models\Booking;
 
 class BookingController extends Controller
 {
@@ -35,7 +36,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        return view('booking.create');
     }
 
     /**
@@ -46,7 +47,43 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = session()->get('company');
+
+        $event = session()->get('event');
+
+        $user = Auth::user()->id;
+
+        $request->validate([
+            'schedule_date' => ['required'],
+            'scheduled_seats' => ['required'],
+        ]);
+
+        Booking::create([
+            'user_id' => $user,
+            'event_id' => $event->id,
+            'company_id' => $company->id,
+            'schedule_date' => $request->schedule_date,
+            'scheduled_seats' => $request->scheduled_seats,
+        ]);
+
+        //$companyEvent = DB::table('company_events')->where('company_id', $company)->where('event_id', $event)->get();
+        //$updatedSeats = $companyEvent->seats - $request->scheduled_seats;
+        //$companyEvent->updateExistingPivot(['seats' => $updatedSeats]);
+
+        return Redirect::route('dashboard');
+    }
+
+    /**
+     * Get bookings
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getBookings()
+    {
+        $user = Auth::user()->id;
+        $bookings = DB::select('select * from bookings where user_id = ?', [$user]);
+
+        return view("dashboard", ['bookings' => $bookings]);
     }
 
     /**
@@ -91,6 +128,18 @@ class BookingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+
+        $this->authorize('delete', $booking);
+
+        if (Auth::user()->id == $booking->user_id) {
+            DB::delete('delete from bookings where id = ?', [$id]);
+
+            return Redirect::route('dashboard');
+        }
+        else {
+            return Redirect::route('dashboard')
+                ->with('message', 'Vous n\'avez pas les droits!');
+        }
     }
 }

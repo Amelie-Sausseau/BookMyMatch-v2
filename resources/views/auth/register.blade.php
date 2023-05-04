@@ -69,13 +69,35 @@
                 <x-input-error :messages="$errors->get('role')" class="mt-2" />
             </div>
 
+            <div class="form-group row text-center">
+                <div class="col-md-10">
+                    <label for="politique">J'ai lu et j'accepte les
+                        <a href="{{ route('politique') }}">mentions légales et la politique de
+                            confidentialité</a>
+                    </label>
+                </div>
+                <div class="col-md-2">
+                    <input class="mx-auto" type="checkbox" name="politique" id="politique"
+                        onclick="toggleValidationButtonDisplay()">
+                </div>
+                <x-input-error :messages="$errors->get('politique.required')" class="mt-2" />
+            </div>
+
+            <script>
+                function toggleValidationButtonDisplay() {
+                    let checkbox = document.getElementById("politique");
+                    let boutonValider = document.getElementById("valider");
+                    checkbox.checked ? boutonValider.style.visibility = "visible" : boutonValider.style.visibility = "hidden"
+                }
+            </script>
+
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     href="{{ route('login') }}">
                     {{ __('Déjà inscrit ?') }}
                 </a>
 
-                <x-primary-button class="ml-4">
+                <x-primary-button class="ml-4" style="visibility: hidden" id="valider">
                     {{ __('Inscription') }}
                 </x-primary-button>
             </div>

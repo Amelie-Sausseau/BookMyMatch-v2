@@ -13,7 +13,6 @@
 
                         <form method="post" action="{{ route('profile.add-booking-store', $company->id) }}" class="mt-6 space-y-6">
                             @csrf
-                            @method('post')
                             <div>
                                 <x-input-label for="events" :value="__('Choisir un match')" />
                                 <select id="events" name="events" class="mt-1 block w-full" required autofocus

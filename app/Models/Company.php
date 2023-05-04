@@ -28,7 +28,7 @@ class Company extends Model
         return $this->belongsToMany(Event::class, 'company_events')->withPivot('seats');
     }
 
-    protected $with = ['user'];
+    protected $with = ['user', 'events'];
 
     /**
      * Get a company

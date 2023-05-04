@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/politique', function () {
+    return view('politique');
+})->name('politique');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -38,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->name('profile.company-edit');
     Route::post('/company/edit/{id}', [CompanyController::class, 'update'])->name('company.update');
     Route::get('/dashboard', [CompanyController::class, 'getCompany'])->name('dashboard');
+    Route::get('/dashboard', [BookingController::class, 'getBookings'])->name('dashboard');
 
     Route::get('/add-event/{id}', [CompanyController::class, 'createEventCompany'])->name('profile.add-booking');
     Route::post('/add-event/{id}', [CompanyController::class, 'storeEventCompany'])->name('profile.add-booking-store');
@@ -47,6 +52,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard', [CompanyController::class, 'destroyEventCompany'])->name('delete-event');
 
     Route::get('/liste', [BookingController::class, 'index'])->name('companies-list');
+
+    Route::resource('/booking', BookingController::class);
+
 });
 
 require __DIR__.'/auth.php';
