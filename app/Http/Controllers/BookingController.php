@@ -149,6 +149,11 @@ class BookingController extends Controller
 
             return Redirect::route('dashboard');
         }
+        else if (Auth::user()->role_id == 3) {
+            DB::delete('delete from bookings where id = ?', [$id]);
+
+            return Redirect::route('admin');
+        }
         else {
             return Redirect::route('dashboard')
                 ->with('message', 'Vous n\'avez pas les droits!');

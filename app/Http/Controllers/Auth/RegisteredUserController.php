@@ -53,6 +53,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return view('dashboard');
+        if (Auth::user()->role_id == 3) {
+            return view('admin');
+        } else {
+            return view('dashboard');
+        }
     }
 }

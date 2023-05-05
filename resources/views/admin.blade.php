@@ -26,23 +26,26 @@
                         style="display: flex; flex-direction: column; align-items: start; gap: 30px">
                         <button onclick="showElement('companiesList')">Les établissements</button>
 
-                        <div class="container p-5" style="display:none" id="companiesList">
-                            <table class="table table-info">
-                                <thead class="thead-dark">
-                                    <th>Nom</th>
-                                    <th>Adresse</th>
-                                    <th>Horaires d'ouverture</th>
-                                    <th>Nombre de places</th>
-                                    <th>Responsable</th>
+                        <div class="relative overflow-x-auto" id="companiesList">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <th scope="col" class="px-6 py-3">Nom</th>
+                                    <th scope="col" class="px-6 py-3">Adresse</th>
+                                    <th scope="col" class="px-6 py-3">Horaires d'ouverture</th>
+                                    <th scope="col" class="px-6 py-3">Nombre de places</th>
+                                    <th scope="col" class="px-6 py-3">Responsable</th>
                                 </thead>
                                 @foreach ($companies as $company)
-                                    <tr>
-                                        <td>{{ $company->name }}</td>
-                                        <td>{{ $company->address, $company->postal_code, $company->city }}</td>
-                                        <td>{{ $company->opening_hours }}</td>
-                                        <td>{{ $company->available_seats }}</td>
-                                        <td>{{ $company->user_id }}</td>
-                                        <td>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">{{ $company->name }}</td>
+                                        <td class="px-6 py-4">
+                                            {{ $company->address, $company->postal_code, $company->city }}</td>
+                                        <td class="px-6 py-4">{{ $company->opening_hours }}</td>
+                                        <td class="px-6 py-4">{{ $company->available_seats }}</td>
+                                        <td class="px-6 py-4">{{ $company->user->firstname }}
+                                            {{ $company->user->lastname }}</td>
+                                        <td class="px-6 py-4">
                                             <form action="{{ route('booking.destroy', $company->id) }}" method="delete">
                                                 <button>
                                                     <p><i class="fa-solid fa-trash"></i></p>
@@ -58,11 +61,9 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="row">
@@ -71,19 +72,19 @@
                         style="display: flex; flex-direction: column; align-items: start; gap: 30px">
                         <button onclick="showElement('eventsList')">Les évènements</button>
 
-                        <div class="container p-5" style="display:none" id="eventsList">
-                            <table class="table table-info">
-                                <thead class="thead-dark">
-                                    <th>Match</th>
-                                    <th>Date</th>
+                        <div class="relative overflow-x-auto" id="eventsList">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <th scope="col" class="px-6 py-3">Titre</th>
+                                    <th scope="col" class="px-6 py-3">Date</th>
                                 </thead>
                                 @foreach ($events as $event)
-                                    <tr>
-                                        <td>{{ $event->title }}</td>
-                                        <td>{{ $event->date }}</td>
-                                        <td>
-                                            <form action="{{ route('booking.destroy', $event->id) }}"
-                                                method="delete">
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">{{ $event->title }}</td>
+                                        <td class="px-6 py-4">{{ date('d/m/Y à H:i', strtotime($event->date)) }}</td>
+                                        <td class="px-6 py-4">
+                                            <form action="{{ route('booking.destroy', $event->id) }}" method="delete">
                                                 <button>
                                                     <p><i class="fa-solid fa-trash"></i></p>
                                                 </button>
@@ -109,25 +110,27 @@
                         style="display: flex; flex-direction: column; align-items: start; gap: 30px">
                         <button onclick="showElement('bookingsList')">Les réservations</button>
 
-                        <div class="container p-5" style="display:none" id="bookingsList">
-                            <table class="table table-info">
-                                <thead class="thead-dark">
-                                    <th>Evènement</th>
-                                    <th>Date réservée</th>
-                                    <th>Nombre de places</th>
-                                    <th>Etablissement</th>
-                                    <th>Client</th>
+                        <div class="relative overflow-x-auto" id="bookingsList">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <th scope="col" class="px-6 py-3">Evènement</th>
+                                    <th scope="col" class="px-6 py-3">Date</th>
+                                    <th scope="col" class="px-6 py-3">Nombre de places</th>
+                                    <th scope="col" class="px-6 py-3">Client</th>
+                                    <th scope="col" class="px-6 py-3">Etablissement</th>
                                 </thead>
                                 @foreach ($bookings as $booking)
-                                    <tr>
-                                        <td>{{ $booking->event_id }}</td>
-                                        <td>{{ $booking->schedule_date }}</td>
-                                        <td>{{ $booking->scheduled_seats }}</td>
-                                        <td>{{ $booking->company_id }}</td>
-                                        <td>{{ $booking->user_id }}</td>
-                                        <td>
-                                            <form action="{{ route('booking.destroy', $booking->id) }}"
-                                                method="delete">
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">{{ $booking->event_id }}</td>
+                                        <td class="px-6 py-4">{{ $booking->schedule_date }}</td>
+                                        <td class="px-6 py-4">{{ $booking->scheduled_seats }}</td>
+                                        <td class="px-6 py-4">{{ $booking->user->firstname }}
+                                            {{ $booking->user->lastname }}</td>
+                                        <td class="px-6 py-4">{{ $booking->company_id }}</td>
+                                        <td class="px-6 py-4">
+                                            <form action="{{ route('booking.destroy', $booking) }}" method="delete">
+                                                @csrf
                                                 <button>
                                                     <p><i class="fa-solid fa-trash"></i></p>
                                                 </button>
@@ -142,7 +145,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </table>
                         </div>
                     </div>
@@ -154,20 +156,21 @@
                         style="display: flex; flex-direction: column; align-items: start; gap: 30px">
                         <button onclick="showElement('usersList')">Les utilisateurs</button>
 
-                        <div class="container p-5" style="display:none" id="usersList">
-                            <table class="table table-info">
-                                <thead class="thead-dark">
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Email</th>
-                                    <th>Type d'utilisateur</th>
+                        <div class="relative overflow-x-auto" id="usersList">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <th scope="col" class="px-6 py-3">Nom</th>
+                                    <th scope="col" class="px-6 py-3">Prénom</th>
+                                    <th scope="col" class="px-6 py-3">Email</th>
+                                    <th scope="col" class="px-6 py-3">Rôle</th>
                                 </thead>
                                 @foreach ($users as $user)
-                                    <tr>
-                                        <td>{{ $user->lastname }}</td>
-                                        <td>{{ $user->firstname }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->role_id }}</td>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">{{ $user->lastname }}</td>
+                                        <td class="px-6 py-4">{{ $user->firstname }}</td>
+                                        <td class="px-6 py-4">{{ $user->email }}</td>
+                                        <td class="px-6 py-4">{{ $user->role->role }}</td>
                                         <td>
                                             <form action="{{ route('booking.edit', $user->id) }}" method="get">
                                                 <button>
@@ -177,7 +180,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </table>
                         </div>
                     </div>

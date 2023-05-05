@@ -28,11 +28,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return view('dashboard');
+        if (Auth::user()->role_id == 3) {
+            return view('admin');
+        } else {
+            return view('dashboard');
+        }
     }
 
     /**

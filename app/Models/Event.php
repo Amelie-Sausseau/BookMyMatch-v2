@@ -18,6 +18,7 @@ class Event extends Model
         return $this->belongsToMany(Company::class, 'company_events')->withPivot('seats', 'date');
     }
 
+
     /**
      * Get an event
      *
