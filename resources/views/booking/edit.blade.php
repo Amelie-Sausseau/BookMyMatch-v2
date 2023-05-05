@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Réserver des places') }}
+            {{ __('Modifier ma réservation') }}
         </h2>
     </x-slot>
 
@@ -11,11 +11,12 @@
                 <div class="max-w-xl">
                     <section>
 
-                        <form method="post" action="{{ route('booking.store') }}" class="mt-6 space-y-6">
+                        <form method="post" action="{{ route('booking.update', $booking->id) }}" class="mt-6 space-y-6">
                             @csrf
+                            @method('post')
 
                             <div>
-                                <p>Match à réserver </p>
+                                <p>Match réservé </p>
                                 <p>
                                     {{ session()->get('event')->title }} le
                                     {{ date('d/m/Y à H:i', strtotime(session()->get('event')->date)) }}
@@ -26,7 +27,7 @@
                                 <x-input-label for="schedule_date" :value="__('Sélectionner votre horaire d\'arrivée')" />
                                 <x-text-input id="schedule_date" name="schedule_date" type="datetime-local"
                                     class="mt-1 block w-full" required autofocus autocomplete="schedule_date"
-                                    value="{{ session()->get('event')->date }}" max="{{ session()->get('event')->date }}"/>
+                                    value="{{ $booking->schedule_date }}" max="{{ session()->get('event')->date }}"/>
                                 <x-input-error class="mt-2" :messages="$errors->get('schedule_date')" />
                             </div>
 
@@ -34,7 +35,7 @@
                                 <x-input-label for="scheduled_seats" :value="__('Nombre de places à réserver')" />
                                 <x-text-input id="scheduled_seats" name="scheduled_seats" type="number"
                                     class="mt-1 block w-full" required autofocus autocomplete="scheduled_seats"
-                                    max="{{ session()->get('event')->seats }}" />
+                                    value="{{ $booking->scheduled_seats }}" max="{{ session()->get('event')->seats }}"/>
                                 <x-input-error class="mt-2" :messages="$errors->get('scheduled_seats')" />
                             </div>
 

@@ -50,6 +50,13 @@ return array(
     ),
     "not_in"           => "Le champ :attribute sélectionné n'est pas valide.",
     "numeric"          => "Le champ :attribute doit contenir un nombre.",
+    'password' => [
+        'letters' => 'Le :attribute doit contenir au moins une lettre.',
+        'mixed' => 'Le :attribute doit contenir au moins une minuscule et une majuscule.',
+        'numbers' => 'Le :attribute doit contenir au moins un chiffre.',
+        'symbols' => 'Le :attribute doit contenir au moins un symbole.',
+        'uncompromised' => 'Le given :attribute semble provenir d\'une fuite de données. Essayez un nouveau :attribute.',
+    ],
     'politique.required' => 'Veuillez cocher la case pour accepter la politique de confidentialité et les mentions légales',
     "regex"            => "Le format du champ :attribute est invalide.",
     "required"         => "Le champ :attribute est obligatoire.",

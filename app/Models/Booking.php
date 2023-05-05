@@ -23,6 +23,6 @@ class Booking extends Model
         return $this->belongsTo(Event::class);
     }
 
-    protected $with = ['user'];
+    protected $with = ['user', 'event'];
 
 }

@@ -11,14 +11,14 @@
 
             <!-- Prénom + nom -->
             <div class="mt-4">
-                <x-input-label for="firstname" :value="__('Prénom')" />
+                <x-input-label for="firstname" :value="__('Prénom *')" />
                 <x-text-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')"
                     required autofocus />
                 <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
             </div>
 
             <div class="mt-4">
-                <x-input-label for="lastname" :value="__('Nom')" />
+                <x-input-label for="lastname" :value="__('Nom *')" />
                 <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')"
                     required autofocus />
                 <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
@@ -27,7 +27,7 @@
 
             <!-- Email  -->
             <div class="mt-4">
-                <x-input-label for="email" :value="__('Email')" />
+                <x-input-label for="email" :value="__('Email *')" />
                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                     required />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -35,7 +35,7 @@
 
             <!-- Mot de passe -->
             <div class="mt-4">
-                <x-input-label for="password" :value="__('Mot de passe')" />
+                <x-input-label for="password" :value="__('Mot de passe *')" />
 
                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
                     autocomplete="new-password" />
@@ -45,7 +45,7 @@
 
             <!-- Confirmer le mdp -->
             <div class="mt-4">
-                <x-input-label for="password_confirmation" :value="__('Confirmez le mot de passe')" />
+                <x-input-label for="password_confirmation" :value="__('Confirmez le mot de passe *')" />
 
                 <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
                     name="password_confirmation" required />
@@ -55,7 +55,7 @@
 
             <!-- Choix du role -->
             <div class="mt-4">
-                <x-input-label for="role" :value="__('Vous êtes')" />
+                <x-input-label for="role" :value="__('Vous êtes *')" />
                 <div style="display: flex; gap: 10px;">
                     <div style="display: flex; align-items:center; gap: 5px;">
                         <label for="client">Un client</label>
@@ -70,13 +70,11 @@
             </div>
 
             <div class="form-group row text-center">
-                <div class="col-md-10">
+                <div class="mt-4" style="text-align: start;">
                     <label for="politique">J'ai lu et j'accepte les
-                        <a href="{{ route('politique') }}">mentions légales et la politique de
-                            confidentialité</a>
+                        <a href="{{ route('politique') }}" class="underline">mentions légales et la politique de
+                            confidentialité *</a>
                     </label>
-                </div>
-                <div class="col-md-2">
                     <input class="mx-auto" type="checkbox" name="politique" id="politique"
                         onclick="toggleValidationButtonDisplay()">
                 </div>

@@ -54,7 +54,7 @@
         </form>
         <div style="margin-top: 10%">
             <p>Pas encore de compte ?</p>
-            <a href="{{ route('register') }}" type="button " class="btn btn-default">S'inscrire</a>
+            <a href="{{ route('register') }}" type="button " class="btn btn-default underline">S'inscrire</a>
         </div>
     </x-auth-card>
 

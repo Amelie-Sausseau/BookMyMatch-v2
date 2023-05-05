@@ -4,6 +4,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +30,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
+
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -54,6 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/liste', [BookingController::class, 'index'])->name('companies-list');
 
     Route::resource('/booking', BookingController::class);
+    Route::get('/booking/edit/{id}', [BookingController::class, 'edit'])->name('booking.edit');
+    Route::post('/booking/edit/{id}', [BookingController::class, 'update'])->name('booking.update');
 
 });
 

@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-black border-b border-gray-100 text-white-800">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-black max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
             <div class="flex">
                 <!-- Logo -->
@@ -11,7 +11,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-gray-800">
+                <div class="bg-black hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-gray-800">
                     <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
                         {{ __('Accueil') }}
                     </x-nav-link>

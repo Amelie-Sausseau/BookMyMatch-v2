@@ -87,17 +87,6 @@ class BookingController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -105,19 +94,42 @@ class BookingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+        //$event = session()->get('event');
+        return view('booking.edit', ['booking' => $booking]); //'event' => $event]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+
+        $company = session()->get('company');
+
+        $event = session()->get('event');
+
+        $user = Auth::user()->id;
+
+        $request->validate([
+            'schedule_date' => ['required'],
+            'scheduled_seats' => ['required'],
+        ]);
+
+        $booking->update([
+            'user_id' => $user,
+            'event_id' => $event->id,
+            'company_id' => $company->id,
+            'schedule_date' => $request->schedule_date,
+            'scheduled_seats' => $request->scheduled_seats,
+        ]);
+
+
+        return Redirect::route('dashboard');
     }
 
     /**

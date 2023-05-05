@@ -1,7 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            @if (Auth::user()->role_id == 3)
+                {{ __('Espace administrateur') }}
+            @else
+                {{ __('Dashboard') }}
+            @endif
         </h2>
     </x-slot>
 
@@ -75,7 +79,7 @@
                     </div>
                 @endforeach
             @endif
-            @if (Auth::user()->role_id == 1 && count($bookings) > 0)
+            @if (Auth::user()->role_id == 1)
                 @if (count($bookings) > 1)
                     <h1>Mes réservations</h1>
                 @else
@@ -94,16 +98,17 @@
                                 <p>Le {{ date('d/m/Y à H:i', strtotime($booking->schedule_date)) }}</p>
                                 <p>Nombre de places réservées : {{ $booking->scheduled_seats }}</p>
                             </div>
-                            @if ($booking->schedule_date > now())
+                            @if (App\Models\Event::getEvent($booking->event_id)->date > now())
                                 <div class="company-choices" style="margin-inline-start: auto;">
                                     <form action="{{ route('booking.destroy', $booking->id) }}" method="delete">
                                         <button>
                                             <p><i class="fa-solid fa-trash"></i></p>
                                         </button>
                                     </form>
-                                    <a href="">
-                                        <p><i class="fa-solid fa-pen-to-square"></i></p>
-                                    </a>
+                                    <form action="{{ route('booking.edit', $booking->id) }}" method="get">
+                                        <button>
+                                            <p><i class="fa-solid fa-pen-to-square"></i></p>
+                                        </button>
                                 </div>
                             @endif
                         </div>
